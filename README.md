@@ -1,7 +1,5 @@
 # ESP32-C3-Telegram-Power-On-Notification
 
-# ESP32-C3 Telegram Power-On Notification
-
 This project uses an ESP32-C3 microcontroller to send a Telegram message to multiple chat IDs when the device powers on and connects to Wi-Fi. It also activates a buzzer for 5 seconds to signal power-on. The project is designed for IoT applications, such as remote startup notifications.
 
 ## Features
