@@ -32,7 +32,7 @@ void setup() {
   pinMode(buzzerPin, OUTPUT);
   digitalWrite(buzzerPin, LOW);
 
-  Serial.println("🔄 Connecting to Wi-Fi...");
+  Serial.println("Connecting to Wi-Fi...");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -42,12 +42,12 @@ void setup() {
     Serial.print(".");
   }
 
-  Serial.println("\n✅ Wi-Fi Connected!");
+  Serial.println("\n Wi-Fi Connected!");
 
   // Send message to all chat IDs once connected, if not already sent
   if (!messageSent) {
     Serial.println("⚡ Power ON: Sending Telegram + Buzzer ON");
-    sendTelegramMessage("⚡ ESP32-C3 Power ON & Turn off Generator ✅");
+    sendTelegramMessage("⚡ ESP32-C3 Power ON & Turn off Generator ");
     digitalWrite(buzzerPin, HIGH);
     buzzerActive = true;
     buzzerStartTime = millis();
@@ -60,7 +60,7 @@ void loop() {
   if (buzzerActive && (millis() - buzzerStartTime >= 5000)) {
     digitalWrite(buzzerPin, LOW);
     buzzerActive = false;
-    Serial.println("🔕 Buzzer OFF");
+    Serial.println("Buzzer OFF");
   }
   delay(1000); // Keep loop lightweight
 }
@@ -71,15 +71,15 @@ void sendTelegramMessage(String message) {
     HTTPClient http;
     for (int i = 0; i < phoneCount; i++) {
       String url = "https://api.telegram.org/bot" + String(botToken) + "/sendMessage?chat_id=" + String(chatIDs[i]) + "&text=" + message;
-      Serial.print("📤 Sending message to chat ID: ");
+      Serial.print("Sending message to chat ID: ");
       Serial.println(chatIDs[i]);
       http.begin(url);
       int httpCode = http.GET();
       if (httpCode == 200) {
-        Serial.print("✅ Message sent successfully to chat ID: ");
+        Serial.print("Message sent successfully to chat ID: ");
         Serial.println(chatIDs[i]);
       } else {
-        Serial.print("❌ Failed to send message to chat ID: ");
+        Serial.print("Failed to send message to chat ID: ");
         Serial.print(chatIDs[i]);
         Serial.print(", HTTP Code: ");
         Serial.println(httpCode);
@@ -88,6 +88,6 @@ void sendTelegramMessage(String message) {
       delay(500); // Avoid overwhelming the Telegram API
     }
   } else {
-    Serial.println("⚠️ Wi-Fi not connected. Cannot send messages.");
+    Serial.println("Wi-Fi not connected. Cannot send messages.");
   }
 }
